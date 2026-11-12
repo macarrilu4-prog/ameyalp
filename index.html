@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ameyalatl — Sistema Inteligente de Reúso de Aguas Grises</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            petroleum: '#0A2E2A',
+                            petroleumDark: '#051A18',
+                            sage: '#4A6B5D',
+                            sageLight: '#8CA89A',
+                            olive: '#556B2F',
+                            ivory: '#FBF9F5',
+                            stone: '#E6E2DD',
+                            sand: '#D9D3C7',
+                            graphite: '#1C2421',
+                            muted: '#5A6561',
+                            water: '#2B7A78',
+                            waterLight: '#DEF2F1'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FBF9F5;
+            color: #1C2421;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(251, 249, 245, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .glass-dark {
+            background: rgba(10, 46, 42, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        input[type=range] {
+            -webkit-appearance: none;
+            background: #E6E2DD;
+            height: 6px;
+            border-radius: 3px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            background: #0A2E2A;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            transition: transform 0.2s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
+        }
+        .animated-water-flow {
+            stroke-dasharray: 10;
+            animation: flow 1.5s linear infinite;
+        }
+        @keyframes flow {
+            from { stroke-dashoffset: 20; }
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-sage selection:text-white">
+
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <nav class="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-brand-petroleum text-brand-ivory flex items-center justify-center p-2 shadow-md transition-transform duration-500 group-hover:scale-105">
+                    <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
+                        <path d="M50 10 C30 45, 20 60, 20 72 C20 88, 33 95, 50 95 C67 95, 80 88, 80 72 C80 60, 70 45, 50 10 Z" fill="none" stroke="currentColor" stroke-width="8"/>
+                        <circle cx="50" cy="40" r="6" fill="#8CA89A"/>
+                        <path d="M30 68 Q 50 55, 70 68 Q 50 80, 30 68 Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl tracking-wider font-semibold text-brand-petroleum uppercase leading-none">Ameyalatl</span>
+                    <span class="text-[9px] tracking-[0.25em] text-brand-sage uppercase font-medium mt-1">Ecotecnología de Reúso</span>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-6 text-xs tracking-widest uppercase font-medium text-brand-graphite/80">
+                <a href="#inicio" class="hover:text-brand-petroleum transition-colors py-1">Inicio</a>
+                <a href="#filtro" class="hover:text-brand-petroleum transition-colors py-1">El Filtro Cilíndrico</a>
+                <a href="#tinaco-sistema" class="hover:text-brand-petroleum transition-colors py-1">Tinaco Esbelto</a>
+                <a href="#usos-practicos" class="hover:text-brand-petroleum transition-colors py-1">Usos</a>
+                <a href="#costos-precio" class="hover:text-brand-petroleum transition-colors py-1">Precio</a>
+                <a href="#investigacion-expertos" class="hover:text-brand-petroleum transition-colors py-1">Expertos</a>
+                <a href="#calculadora" class="hover:text-brand-petroleum transition-colors py-1">Tabulador</a>
+                <a href="#normativa" class="hover:text-brand-petroleum transition-colors py-1">NOM</a>
+            </div>
+
+            <a href="#calculadora" class="hidden sm:inline-flex items-center px-5 py-2.5 rounded-full bg-brand-petroleum text-brand-ivory text-xs tracking-wider uppercase font-medium hover:bg-brand-sage transition-all duration-300 shadow-sm">
+                <i class="fa-solid fa-calculator text-[10px] mr-2"></i> Calcular Ahorro
+            </a>
+
+            <button id="mobile-menu-btn" class="md:hidden text-brand-petroleum focus:outline-none p-2" aria-label="Abrir Menú">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </nav>
+
+        <div id="mobile-drawer" class="hidden md:hidden bg-brand-ivory border-b border-brand-stone px-6 py-6 space-y-4 shadow-xl">
+            <a href="#inicio" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Inicio</a>
+            <a href="#filtro" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">El Filtro Cilíndrico</a>
+            <a href="#tinaco-sistema" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Tinaco Esbelto</a>
+            <a href="#usos-practicos" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Usos del Agua</a>
+            <a href="#costos-precio" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Precio de Venta</a>
+            <a href="#investigacion-expertos" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Validación Expertos</a>
+            <a href="#calculadora" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Tabulador de Ahorro</a>
+            <a href="#normativa" class="block text-sm uppercase tracking-wider text-brand-graphite mobile-nav-link">Normativa NOM</a>
+        </div>
+    </header>
+
+    <section id="inicio" class="relative min-h-screen flex items-center pt-28 pb-16 px-6 lg:px-12 bg-gradient-to-b from-brand-petroleum via-brand-petroleum to-brand-petroleumDark text-brand-ivory overflow-hidden">
+        <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#8CA89A 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+            <div class="lg:col-span-6 space-y-8">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-dark text-brand-sageLight text-xs tracking-widest uppercase border border-white/10">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-sageLight animate-pulse"></span>
+                    Sistema por Gravedad & Termofusión PPR 3/4"
+                </div>
+
+                <h1 class="font-serif text-4xl sm:text-6xl font-normal leading-[1.08] tracking-tight">
+                    Ameyalatl: Reúso inteligente <br>
+                    <span class="italic text-brand-sageLight font-light">de lavabos, regaderas y lavadoras.</span>
+                </h1>
+
+                <p class="text-brand-ivory/80 text-base sm:text-lg font-light leading-relaxed max-w-xl">
+                    Ameyalatl intercepta el agua del lavabo del baño, regaderas y lavadora, mediante un filtro cilíndrico con depósito auxiliar ubicado en el exterior y las conduce automáticamente hacia un tinaco exterior de 500 litros equipado para riego, tareas del hogar y principalmente carga del inodoro.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                    <a href="#calculadora" class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-brand-ivory text-brand-petroleum font-semibold text-xs tracking-widest uppercase hover:bg-brand-sand transition-all duration-300 shadow-xl group">
+                        Abrir Tabulador de Ahorro
+                        <i class="fa-solid fa-arrow-right ml-3 transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                    <a href="#costos-precio" class="inline-flex items-center justify-center px-8 py-4 rounded-full border border-white/20 text-brand-ivory font-medium text-xs tracking-widest uppercase hover:bg-white/10 transition-all">
+                        <i class="fa-solid fa-tag mr-2 text-brand-sageLight"></i> Precio ($5,490 MXN)
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 text-xs">
+                    <div>
+                        <span class="text-brand-sageLight font-bold block text-lg font-serif">500 Litros</span>
+                        <span class="text-brand-ivory/60">Tinaco esbelto</span>
+                    </div>
+                    <div>
+                        <span class="text-brand-sageLight font-bold block text-lg font-serif">3/4" PPR</span>
+                        <span class="text-brand-ivory/60">Termofusión</span>
+                    </div>
+                    <div>
+                        <span class="text-brand-sageLight font-bold block text-lg font-serif">$5,490 MXN</span>
+                        <span class="text-brand-ivory/60">Precio al público</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-brand-petroleumDark/90 rounded-3xl p-6 sm:p-8 border border-brand-sage/30 shadow-2xl relative overflow-hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs uppercase tracking-widest font-semibold text-brand-sageLight">
+                        <i class="fa-solid fa-diagram-project mr-1"></i> Esquema Integral Ameyalatl
+                    </span>
+                    <span class="text-[10px] bg-brand-sage/20 text-brand-sageLight px-2.5 py-1 rounded-full border border-brand-sage/30">
+                        Filtro Exterior Junto al Tinaco
+                    </span>
+                </div>
+
+                <div class="w-full bg-[#03110F] rounded-2xl p-4 border border-white/10 overflow-hidden shadow-inner">
+                    <svg viewBox="0 0 800 500" class="w-full h-auto" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="420" height="500" fill="#0D2320" />
+                        <rect x="420" y="0" width="380" height="500" fill="#081A18" />
+                        <rect x="400" y="0" width="30" height="500" fill="#2A3835" stroke="#1C2725" stroke-width="2"/>
+                        <text x="415" y="480" fill="#8CA89A" font-size="10" text-anchor="middle">MURO</text>
+
+                        <!-- Interior Hogar -->
+                        <rect x="30" y="160" width="340" height="15" fill="#C5A059" rx="3" />
+                        <rect x="30" y="175" width="340" height="200" fill="#18332F" stroke="#2D4D47" stroke-width="2" rx="4"/>
+                        <path d="M 100 160 Q 180 230, 260 160 Z" fill="#FBF9F5" stroke="#D9D3C7" stroke-width="3"/>
+                        <path d="M 180 120 L 180 150 M 180 120 Q 180 100, 160 100 L 150 100" fill="none" stroke="#E6E2DD" stroke-width="6" stroke-linecap="round"/>
+                        <line x1="150" y1="105" x2="150" y2="190" stroke="#2B7A78" stroke-width="4" class="animated-water-flow" opacity="0.8"/>
+                        <text x="180" y="85" fill="#FBF9F5" font-size="11" font-weight="bold" font-family="serif">Lavabos, Regaderas y Lavadora</text>
+
+                        <!-- Tubería hacia el exterior -->
+                        <path d="M 180 350 L 450 350" stroke="#556B2F" stroke-width="8" fill="none" class="animated-water-flow"/>
+                        <text x="300" y="340" fill="#8CA89A" font-size="9" font-weight="bold">Conducción al Exterior</text>
+
+                        <!-- Filtro Exterior junto al Tinaco -->
+                        <rect x="440" y="250" width="50" height="100" rx="6" fill="#1C403B" stroke="#8CA89A" stroke-width="2"/>
+                        <text x="465" y="305" fill="#FFF" font-size="8" text-anchor="middle">Filtro Ext.</text>
+
+                        <!-- Tinaco Esbelto Salchicha Exterior -->
+                        <rect x="510" y="150" width="100" height="230" rx="20" fill="#111" stroke="#4A6B5D" stroke-width="4"/>
+                        <rect x="530" y="135" width="60" height="15" rx="4" fill="#333" stroke="#8CA89A" stroke-width="1"/>
+                        <rect x="520" y="170" width="80" height="190" rx="10" fill="#2B7A78" opacity="0.4"/>
+                        <text x="560" y="255" fill="#FFF" font-size="11" font-weight="bold" font-family="serif" text-anchor="middle">TINACO ESBELTO</text>
+                        <text x="560" y="275" fill="#8CA89A" font-size="10" font-weight="bold" text-anchor="middle">500 LITROS</text>
+
+                        <!-- Salida Inodoro y Riego -->
+                        <path d="M 610 320 L 650 320 L 650 360" stroke="#C5A059" stroke-width="6" fill="none"/>
+                        <circle cx="650" cy="315" r="7" fill="#C5A059"/>
+                        <text x="640" y="305" fill="#E6E2DD" font-size="9" font-weight="bold">Carga WC / Riego</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 01: EL FILTRO CILÍNDRICO DETALLADO -->
+    <section id="filtro" class="py-24 px-6 lg:px-12 bg-brand-ivory border-b border-brand-stone">
+        <div class="max-w-7xl mx-auto space-y-16">
+            
+            <div class="max-w-3xl space-y-4">
+                <span class="text-xs tracking-[0.25em] font-semibold text-brand-sage uppercase">01 / El Corazón Tecnológico</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-brand-petroleum font-normal">
+                    Filtro Cilíndrico Transparente con Depósito Auxiliar
+                </h2>
+                <p class="text-brand-graphite/80 text-base sm:text-lg font-light leading-relaxed">
+                    Ubicado en el exterior junto al tinaco, recibe las descargas combinadas del lavabo del baño, regaderas y lavadora. Realiza un filtrado físico y químico continuo para garantizar agua limpia y sin patógenos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-brand-stone/30 rounded-3xl p-6 sm:p-10 border border-brand-stone shadow-sm">
+                
+                <div class="lg:col-span-6 bg-white rounded-2xl p-6 border border-brand-stone shadow-md flex justify-center">
+                    <svg viewBox="0 0 500 650" class="w-full max-w-md h-auto" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="120" y="80" width="180" height="480" rx="30" fill="#F4F8F7" stroke="#0A2E2A" stroke-width="4"/>
+                        <rect x="130" y="90" width="160" height="460" rx="20" fill="none" stroke="#8CA89A" stroke-width="1" stroke-dasharray="4"/>
+
+                        <path d="M 210 20 L 210 80" stroke="#0A2E2A" stroke-width="14" fill="none"/>
+                        <path d="M 210 20 L 210 80" stroke="#2B7A78" stroke-width="6" fill="none"/>
+                        <text x="210" y="15" fill="#0A2E2A" font-size="11" font-weight="bold" text-anchor="middle">1. Entrada Aguas Grises (Lavabo/Regadera/Lavadora)</text>
+
+                        <!-- Capa 1: Malla -->
+                        <rect x="140" y="110" width="140" height="70" rx="6" fill="#2C3531"/>
+                        <text x="210" y="145" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">Malla de Partículas</text>
+                        <text x="210" y="160" fill="#8CA89A" font-size="9" text-anchor="middle">Retiene jabón, cabello, pelusa y sedimentos</text>
+
+                        <!-- Capa 2: Cámara -->
+                        <rect x="140" y="190" width="140" height="180" rx="6" fill="#DEF2F1" stroke="#2B7A78" stroke-width="2"/>
+                        <text x="210" y="250" fill="#0A2E2A" font-size="12" font-weight="bold" text-anchor="middle">Cámara de Mezcla</text>
+                        <text x="210" y="268" fill="#4A6B5D" font-size="10" text-anchor="middle">Tratamiento Biocida / Bio-Nutriente</text>
+
+                        <!-- Depósito Auxiliar -->
+                        <g transform="translate(320, 190)">
+                            <rect x="0" y="0" width="110" height="170" rx="12" fill="#8CA89A" stroke="#0A2E2A" stroke-width="3"/>
+                            <rect x="30" y="-12" width="50" height="12" rx="3" fill="#0A2E2A"/>
+                            <rect x="10" y="20" width="90" height="130" rx="6" fill="#FBF9F5" opacity="0.8"/>
+                            <text x="55" y="60" fill="#0A2E2A" font-size="11" font-weight="bold" text-anchor="middle">DEPÓSITO</text>
+                            <text x="55" y="75" fill="#0A2E2A" font-size="11" font-weight="bold" text-anchor="middle">AUXILIAR</text>
+                            <text x="55" y="95" fill="#556B2F" font-size="9" text-anchor="middle">Solución Rellenable</text>
+                            <path d="M 0 85 L -40 85" stroke="#0A2E2A" stroke-width="6" fill="none"/>
+                        </g>
+
+                        <!-- Capa 3: Carbón -->
+                        <rect x="140" y="380" width="140" height="100" rx="6" fill="#1C2421"/>
+                        <text x="210" y="420" fill="#FFF" font-size="11" font-weight="bold" text-anchor="middle">Carbón Activado (1 kg)</text>
+                        <text x="210" y="435" fill="#8CA89A" font-size="9" text-anchor="middle">Elimina malos olores, turbidez y clarifica</text>
+
+                        <path d="M 210 560 L 210 630" stroke="#0A2E2A" stroke-width="14" fill="none"/>
+                        <path d="M 210 560 L 210 630" stroke="#2B7A78" stroke-width="6" fill="none"/>
+                        <text x="210" y="645" fill="#0A2E2A" font-size="11" font-weight="bold" text-anchor="middle">Salida Hacia el Tinaco Esbelto</text>
+                    </svg>
+                </div>
+
+                <div class="lg:col-span-6 space-y-8">
+                    <div class="space-y-2">
+                        <span class="text-xs font-bold text-brand-sage uppercase tracking-wider">Tratamiento Físico y Químico Continuo</span>
+                        <h3 class="font-serif text-3xl text-brand-petroleum">Proceso de Purificación en 3 Fases</h3>
+                    </div>
+
+                    <div class="space-y-6 text-sm text-brand-graphite/80 font-light">
